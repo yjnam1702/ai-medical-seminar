@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI와 함께하는 의료의 미래 - 경희대 의료경영MBA 학술세미나</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333;
+            padding: 0;
+        }
+
+        /* Animated background elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .neural-network {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(168,237,234,0.4);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .connection {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(168,237,234,0.3), transparent);
+            animation: flow 6s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        @keyframes flow {
+            0% { width: 0; opacity: 1; }
+            100% { width: 150px; opacity: 0; }
+        }
+
+        /* Main container - 하나의 통합 박스 */
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            color: #333;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        /* Section titles with logo */
+        .title-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-right: 0;
+        }
+
+        .poster-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+            display: block;
+        }
+
+        .code-image {
+            width: 200px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .qr-placeholder.has-image {
+            background: transparent;
+            border: none;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(168,237,234,0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-placeholder:hover {
+            border-color: rgba(168,237,234,0.8);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .logo-placeholder-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Welcome message */
+        .welcome-message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        .welcome-message .highlight {
+            background: rgba(102,126,234,0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        /* Poster placeholder */
+        .poster-placeholder {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            min-height: 400px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(168,237,234,0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px auto;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .poster-placeholder:hover {
+            border-color: rgba(168,237,234,0.8);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .poster-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+
+        .poster-placeholder-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Registration section */
+        .registration-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 50px 0 30px 0;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* QR Code placeholder */
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(168,237,234,0.5);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .qr-placeholder:hover {
+            border-color: rgba(168,237,234,0.8);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .qr-placeholder-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* CTA Button - QR코드 박스 넓이와 맞춤 */
+        .cta-button {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+            text-decoration: none;
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 1;
+            width: 200px;
+            text-align: center;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102,126,234,0.4);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Contact info */
+        .contact-info {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info h4 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Sponsor info */
+        .sponsor-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sponsor-info p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .title-section {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .logo-placeholder {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-placeholder-text {
+                font-size: 0.6rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .welcome-message {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+            }
+
+            .poster-placeholder {
+                height: auto;
+                min-height: 200px;
+                margin: 30px auto;
+            }
+
+            .poster-placeholder-text {
+                font-size: 1rem;
+                padding: 20px;
+            }
+
+            .registration-title {
+                font-size: 1.6rem;
+                margin: 40px 0 25px 0;
+            }
+
+            .qr-placeholder {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto 25px;
+            }
+
+            .qr-placeholder-text {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                width: 150px;
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+
+            .contact-info {
+                margin-top: 40px;
+                padding-top: 25px;
+            }
+
+            .contact-info h4 {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+            }
+
+            .contact-info p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 20px;
+            }
+
+            .logo-placeholder {
+                width: 45px;
+                height: 45px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .welcome-message {
+                font-size: 1rem;
+            }
+
+            .poster-placeholder {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .registration-title {
+                font-size: 1.4rem;
+            }
+
+            .qr-placeholder {
+                width: 130px;
+                height: 130px;
+            }
+
+            .cta-button {
+                width: 130px;
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .main-container {
+                margin: 5px;
+            }
+
+            .poster-placeholder {
+                height: auto;
+                min-height: 150px;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="neural-network" id="neuralNetwork"></div>
+    </div>
+
+    <!-- Main unified container -->
+    <div class="main-container">
+        <!-- Welcome Section with Logo -->
+        <div class="title-section">
+            <h1 class="section-title">
+                <img src="./khu2.png" class="title-image">
+                <br>
+                학술세미나 개최 안내
+            </h1>
+        </div>
+        <div class="welcome-message">
+            안녕하세요.<br><br>
+            <strong>2025년 경희대학교 경영대학원 의료경영MBA에서 학술세미나를 개최합니다!</strong><br><br>
+            이번 세미나는 <span class="highlight">'AI와 함께하는 의료의 미래'</span>를 주제로, 특별 초청 강연을 준비하였습니다.<br>
+            의료와 인공지능의 융합이 만들어갈 미래에 대한 깊이 있는 통찰을 공유하는 자리에<br>
+            많은 관심과 성원 부탁드립니다.
+        </div>
+
+        <!-- Poster -->
+        <div class="poster-placeholder" id="poster-placeholder">
+            <img src="./poster.png" class="poster-image">
+        </div>
+
+        <!-- Registration Button -->
+        <a href="https://forms.gle/wxghLDBWt6pN2esRA" class="cta-button" target="_blank">
+            📝 참가신청
+        </a>
+    </div>
+
+    <script>
+        // Neural network background animation
+        function createNeuralNetwork() {
+            const network = document.getElementById('neuralNetwork');
+            const nodeCount = window.innerWidth < 768 ? 15 : 25;
+
+            // Clear existing nodes
+            network.innerHTML = '';
+
+            // Create nodes
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.top = Math.random() * 100 + '%';
+                node.style.animationDelay = Math.random() * 4 + 's';
+                network.appendChild(node);
+
+                // Create connections
+                if (Math.random() > (window.innerWidth < 768 ? 0.7 : 0.6)) {
+                    const connection = document.createElement('div');
+                    connection.className = 'connection';
+                    connection.style.left = node.style.left;
+                    connection.style.top = node.style.top;
+                    connection.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    connection.style.animationDelay = Math.random() * 6 + 's';
+                    network.appendChild(connection);
+                }
+            }
+        }
+
+        // Initialize animation
+        createNeuralNetwork();
+
+        // Recreate network periodically
+        const animationInterval = window.innerWidth < 768 ? 15000 : 12000;
+        setInterval(createNeuralNetwork, animationInterval);
+
+        // Recreate animation on resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(createNeuralNetwork, 300);
+        });
+
+        // Smooth scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize fade-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.main-container > *');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.8s ease';
+                el.style.transitionDelay = (index * 0.1) + 's';
+                observer.observe(el);
+            });
+
+            // Trigger animations after load
+            setTimeout(() => {
+                elements.forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+            }, 300);
+        });
+
+        // Claude Code integration helpers
+        window.seminarApp = {
+            // Function to replace poster placeholder with actual image
+            setPosterImage: function(imageUrl) {
+                const placeholder = document.getElementById('poster-placeholder');
+                if (placeholder) {
+                    placeholder.innerHTML = `<img src="${imageUrl}" alt="세미나 포스터" style="width: 100%; height: 100%; object-fit: contain; border-radius: 15px;">`;
+                }
+            },
+
+            // Function to replace QR code placeholder with actual QR image
+            setQRCode: function(imageUrl) {
+                const placeholder = document.getElementById('qr-placeholder');
+                if (placeholder) {
+                    placeholder.innerHTML = `<img src="${imageUrl}" alt="QR 코드" style="width: 100%; height: 100%; object-fit: contain; border-radius: 15px;">`;
+                }
+            },
+
+            // Function to replace logo placeholder with actual logo
+            setLogo: function(imageUrl) {
+                const placeholder = document.getElementById('logo-placeholder');
+                if (placeholder) {
+                    placeholder.innerHTML = `<img src="${imageUrl}" alt="경희대학교 로고" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">`;
+                }
+            },
+
+            // Function to update registration link
+            setRegistrationLink: function(url) {
+                const button = document.querySelector('.cta-button');
+                if (button) {
+                    button.href = url;
+                }
+            }
+        };
+    </script>
+</body>
+</html>
